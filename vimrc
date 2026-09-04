@@ -225,7 +225,7 @@ Plug 'yuki-yano/fzf-preview.vim', { 'branch': 'release/rpc' } " Shows file previ
 " html
 "" HTML Bundle
 Plug 'hail2u/vim-css3-syntax' " CSS3 syntax
-Plug 'gko/vim-coloresque' " Colour previews in CSS
+"Plug 'gko/vim-coloresque' " Colour previews in CSS
 Plug 'tpope/vim-haml' " HAML, SCSS and Sass features
 Plug 'mattn/emmet-vim' " Expand emmet abbreviations with <C-y> (default)
 
