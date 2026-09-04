@@ -610,4 +610,4 @@ autocmd FileType typeescript let b:coc_root_patterns ['tsconfig.json', 'package.
 " Loads vimrc from current working directory
 set exrc
 
-packadd! editorconfig
+"packadd! editorconfig
