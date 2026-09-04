@@ -426,7 +426,7 @@ cnoremap <C-P> <C-R>=expand("%:p:h") . "/" <CR>
 nnoremap <silent> <leader>b :Buffers<CR>
 
 " Open fuzzy finder (fzf.vim)
-nnoremap <silent> <leader>e :FZF -m<CR>
+nnoremap <silent> <C-p> :FZF -m<CR>
 
 noremap <leader>y "*y
 noremap <leader>Y "*Y
