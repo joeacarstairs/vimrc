@@ -198,7 +198,7 @@ Plug 'Raimondi/delimitMate'
 Plug 'majutsushi/tagbar'
 Plug 'dense-analysis/ale' " linting and indenting
 Plug 'Yggdroot/indentLine'
-Plug 'tomasr/molokai' " molokai theme
+Plug 'sderev/alabaster.vim' " alabaster theme
 "Plug 'lambdalisue/vim-nerdfont'
 Plug 'ryanoasis/vim-devicons' " For displaying nerd font icons eg in file trees, status lines, etc
 Plug 'tpope/vim-sleuth' " Auto-detects shiftwidth, expandtab etc based on file contents, editorconfig etc
@@ -258,7 +258,7 @@ set ruler
 set number
 
 let no_buffers_menu=1
-colorscheme molokai
+colorscheme alabaster-dark
 
 
 " Better command line completion 
