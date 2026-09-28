@@ -256,6 +256,7 @@ filetype plugin indent on
 syntax on
 set ruler
 set number
+set termguicolors
 
 let no_buffers_menu=1
 colorscheme alabaster-dark
