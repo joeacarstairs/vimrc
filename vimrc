@@ -587,7 +587,6 @@ let g:coc_global_extensions = [
     \ 'coc-cssmodules',
     \ 'coc-diagnostic',
     \ 'coc-docker',
-    \ 'coc-emmet',
     \ 'coc-eslint',
     \ 'coc-fzf-preview',
     \ 'coc-git',
