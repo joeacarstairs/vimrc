@@ -1,0 +1,4 @@
+" To use this config in preference to the main vimrc here, move this file to ~/.vimrc
+
+runtime ~/.vim/base.vim
+runtime ~/.vim/autocmd.vim
