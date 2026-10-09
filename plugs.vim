@@ -143,13 +143,21 @@ Plug 'vim-scripts/grep.vim' " :Grep, :Rgrep, :Bgrep etc
 Plug 'vim-scripts/CSApprox' " Adapts gVim themes to terminal Vim
 Plug 'Raimondi/delimitMate'
 Plug 'majutsushi/tagbar'
+let g:tagbar_autofocus = 1
 Plug 'dense-analysis/ale' " linting and indenting
+let g:ale_linters = {}
 Plug 'Yggdroot/indentLine'
 Plug 'sderev/alabaster.vim' " alabaster theme
+
 "Plug 'lambdalisue/vim-nerdfont'
 Plug 'ryanoasis/vim-devicons' " For displaying nerd font icons eg in file trees, status lines, etc
 Plug 'tpope/vim-sleuth' " Auto-detects shiftwidth, expandtab etc based on file contents, editorconfig etc
 Plug 'neoclide/coc.nvim', {'branch': 'release'} " LSP server
+
+" grep.vim
+let Grep_Default_Options = '-IR'
+let Grep_Skip_Files = '*.log *.db'
+let Grep_Skip_Dirs = '.git node_modules'
 
 "" fzf.vim
 if isdirectory('/usr/local/opt/fzf')
@@ -163,6 +171,23 @@ if exists('make')
         let g:make = 'make'
 endif
 Plug 'yuki-yano/fzf-preview.vim', { 'branch': 'release/rpc' } " Shows file previews in fuzzy file picker
+set wildmode=list:longest,list:full
+set wildignore+=*.o,*.obj,.git,*.rbc,*.pyc,__pycache__
+let $FZF_DEFAULT_COMMAND =  "find * -path '*/\.*' -prune -o -path 'node_modules/**' -prune -o -path 'target/**' -prune -o -path 'dist/**' -prune -o  -type f -print -o -type l -print 2> /dev/null"
+" The Silver Searcher
+if executable('ag')
+  let $FZF_DEFAULT_COMMAND = 'ag --hidden --ignore .git -g ""'
+  set grepprg=ag\ --nogroup\ --nocolor
+endif
+" ripgrep
+if executable('rg')
+  let $FZF_DEFAULT_COMMAND = 'rg --files --hidden --follow --glob "!.git/*"'
+  set grepprg=rg\ --vimgrep
+  command! -bang -nargs=* Find call fzf#vim#grep('rg --column --line-number --no-heading --fixed-strings --ignore-case --hidden --follow --glob "!.git/*" --color "always" '.shellescape(<q-args>).'| tr -d "\017"', 1, <bang>0)
+endif
+
+
+
 
 
 "*******************************************************************************
@@ -196,3 +221,101 @@ call plug#end()
 filetype plugin indent on
 
 
+"*****************************************************************************
+"" Mappings
+"*****************************************************************************
+
+" Open fuzzy finder (fzf.vim)
+nnoremap <silent> <C-p> :FZF -m<CR>
+
+" List active buffers (fzf.vim)
+nnoremap <silent> <leader>b :Buffers<CR>
+
+" grep in open workspace (grep.vim)
+nnoremap <silent> <leader>/ :Rgrep<CR>
+
+"" LSP actions
+" Tab either triggers completion, or cycles through completion options
+" Not sure what <C-h> is for...?
+inoremap <silent><expr> <TAB>
+    \ coc#pum#visible() ? coc#pum#next(1) :
+    \ CheckBackspace() ? "\<Tab>" :
+    \ coc#refresh()
+inoremap <expr><S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
+" Navigate diagnostics
+nnoremap <silent> [d <Plug>(coc-diagnostic-prev)
+nnoremap <silent> ]d <Plug>(coc-diagnostic-next)
+" GoTo code navigation
+nnoremap <silent> gd <Plug>(coc-definition)
+nnoremap <silent> gy <Plug>(coc-type-definition)
+nnoremap <silent> gi <Plug>(coc-implementation)
+nnoremap <silent> gr <Plug>(coc-references)
+" Hover
+nnoremap <silent> <leader>k :call ShowDocumentation()<CR>
+" Rename
+nnoremap <leader>r <Plug>(coc-rename)
+" Formatting selected code
+xnoremap <leader>f <Plug>(coc-format-selected)
+nnoremap <leader>f <Plug>(coc-format-selected)
+" Code actions
+xmap <leader>a <Plug>(coc-codeaction-selected)
+nmap <leader>a <Plug>(coc-codeaction-cursor)
+nmap <leader>ab <Plug>(coc-codeaction-source)
+" Refactoring actions
+nmap <leader>rf <silent> <Plug>(coc-codeaction-refactor)
+xmap <leader>rf <silent> <Plug>(coc-codeaction-refactor-selected)
+
+" Tagbar
+nmap <silent> <F4> :TagbarToggle<CR>
+
+"*****************************************************************************
+"" Functions
+"*****************************************************************************
+
+function! ShowDocumentation()
+    if CocAction('hasProvider', 'hover)
+        call CocActionAsync('doHover')
+    else
+           call feedkeys('K', 'in')
+    endif
+endfunction
+
+function! CheckBackspace() abort
+    let col = col('.') - 1
+    return !col || getline('.')[col - 1] =~# '\s'
+endfunction
+
+"*****************************************************************************
+"" Convenience variables
+"*****************************************************************************
+
+"" coc.nvim extensions
+" For up-to-date list, see:
+" https://github.com/neoclide/coc.nvim/wiki/Using-coc-extensions
+let g:coc_global_extensions = [
+    \ 'coc-angular',
+    \ 'coc-css',
+    \ 'coc-cssmodules',
+    \ 'coc-diagnostic',
+    \ 'coc-docker',
+    \ 'coc-eslint',
+    \ 'coc-fzf-preview',
+    \ 'coc-git',
+    \ 'coc-highlight',
+    \ 'coc-html',
+    \ 'coc-htmlhint',
+    \ 'coc-html-css-support',
+    \ 'coc-java',
+    \ 'coc-json',
+    \ 'coc-markdownlint',
+    \ 'coc-prettier',
+    \ 'coc-tsserver',
+    \ 'coc-yaml',
+\]
+autocmd VimEnter silent * CocUpdate
+
+"" CoC workspace roots
+autocmd FileType typeescript let b:coc_root_patterns ['tsconfig.json', 'package.json', 'yarn.lock', '.git']
+
+" alabaster-dark
+colorscheme alabaster-dark
