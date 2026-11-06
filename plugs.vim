@@ -147,7 +147,7 @@ let g:tagbar_autofocus = 1
 Plug 'dense-analysis/ale' " linting and indenting
 let g:ale_linters = {}
 Plug 'Yggdroot/indentLine'
-Plug 'git://git.joeac.net/alabaster-dark-neon.git'
+Plug 'joeacarstairs/alabaster-dark-neon.vim'
 
 "Plug 'lambdalisue/vim-nerdfont'
 Plug 'ryanoasis/vim-devicons' " For displaying nerd font icons eg in file trees, status lines, etc
