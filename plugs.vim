@@ -147,7 +147,7 @@ let g:tagbar_autofocus = 1
 Plug 'dense-analysis/ale' " linting and indenting
 let g:ale_linters = {}
 Plug 'Yggdroot/indentLine'
-Plug 'sderev/alabaster.vim' " alabaster theme
+Plug 'git://git.joeac.net/alabaster-dark-neon.git'
 
 "Plug 'lambdalisue/vim-nerdfont'
 Plug 'ryanoasis/vim-devicons' " For displaying nerd font icons eg in file trees, status lines, etc
@@ -317,5 +317,3 @@ autocmd VimEnter silent * CocUpdate
 "" CoC workspace roots
 autocmd FileType typeescript let b:coc_root_patterns ['tsconfig.json', 'package.json', 'yarn.lock', '.git']
 
-" alabaster-dark
-colorscheme alabaster-dark
